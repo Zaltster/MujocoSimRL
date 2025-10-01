@@ -9,6 +9,8 @@
     <texture name="sky" type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0.0 0.0 0.0" width="512" height="512"/>
     <material name="drone_mat" rgba="0.2 0.2 0.8 1"/>
     <material name="rotor_mat" rgba="0.8 0.2 0.2 1"/>
+    <material name="ball_mat" rgba="1.0 0.8 0.0 1"/>
+    <material name="catcher_mat" rgba="0.0 1.0 0.0 0.5"/>
   </asset>
 
   <worldbody>
@@ -46,6 +48,8 @@
       <!-- Additional cameras for different views -->
       <camera name="fpv_camera" pos="0.1 0 0" xyaxes="0 -1 0 0 0 -1" fovy="90"/>
       <camera name="top_camera" pos="0 0 0.2" xyaxes="1 0 0 0 1 0" fovy="45"/>
+      <!-- Downward camera for ball detection -->
+      <camera name="bottom_camera" pos="0 0 -0.15" xyaxes="1 0 0 0 -1 0" fovy="60"/>
 
       <!-- Sites for actuators and sensors -->
       <site name="prop1_site" pos="0.25 0.25 0.02" size="0.01"/>
@@ -53,6 +57,13 @@
       <site name="prop3_site" pos="-0.25 -0.25 0.02" size="0.01"/>
       <site name="prop4_site" pos="0.25 -0.25 0.02" size="0.01"/>
       <site name="imu_site" pos="0 0 0" size="0.01"/>
+    </body>
+
+    <!-- Falling ball -->
+    <body name="ball" pos="0 0 5">
+      <freejoint/>
+      <geom name="ball_geom" type="sphere" size="0.1" material="ball_mat" mass="0.05" friction="0.5 0.005 0.0001"/>
+      <site name="ball_site" pos="0 0 0" size="0.1"/>
     </body>
 
     <!-- Static camera for external view -->
@@ -75,5 +86,9 @@
     <!-- Position and orientation -->
     <framepos name="drone_pos" objtype="body" objname="drone"/>
     <framequat name="drone_quat" objtype="body" objname="drone"/>
+
+    <!-- Ball tracking sensors -->
+    <framepos name="ball_pos" objtype="body" objname="ball"/>
+    <framequat name="ball_quat" objtype="body" objname="ball"/>
   </sensor>
 </mujoco>
